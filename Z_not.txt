@@ -1,0 +1,22 @@
+///diffrent bitween Kruskal and Prime
+o(mlong n) = o(mlog n)
+kruskal in end of algorithm is HAMBAND but Prime in any time is true
+
+///Fibonachi heap == priority_queue
+	Find Min:      Θ(1)
+	Delete Min:    O(Log n)
+	Insert:        Θ(1)
+	Decrease-Key:  Θ(1)
+	Merge:         Θ(1) 
+
+/// gcd(6k + 1 , 6k +2 , 6k + 3 , 6k + 5) == 1
+
+
+/// O(MAX log (MAX) )
+	for(int i = 1; i < MAX ;i++){
+		for(int j = 1 ;i * j < MAX ;j++){
+		
+		}
+	}
+
+
