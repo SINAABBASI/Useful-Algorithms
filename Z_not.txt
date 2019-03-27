@@ -19,4 +19,52 @@ kruskal in end of algorithm is HAMBAND but Prime in any time is true
 		}
 	}
 
+///// sort with cmp take more time .... check 375B test 40 codeforces
+
+//// for hashing
+const long long  h = 1000000007;
+const long long  mod = 1e15 + 9;
+
+////Problem 383C : (Fenwick + discover Tree) => (node update - range query)
+use start and end time of discover of node to access parrents;
+attention : be carfule dont stuck with this trick ,  answer with this idea is easy!!!
+////
+
+for find distance max\min each vertex to marked vertex =>
+should be solvec with 2 part distDown and distUp
+
+////
+pratiy of permutation : sum number of i < j & a[i] > a[j] then sum % 2;
+when random swap 2 element for speacial turn like 3*n & 7*n+1 parity change
+////
+
+
+
+////greedy 892D :
+we can assign every upper element for the new element and except smaller one 
+every subsequnce except smaller one sigma b > sigma a and otherwise we can 
+consider complement of sequence sigma b > sigma a then we have sigma b < sigma a
+so sigma b != sigma a
+/////
+
+be carfule about for loop in floyd warshall algorithm :
+	first loop is vertex of between other vertex;
+/////
+(dp knapsack)
+in 3 sub with equal sum in array : beacarful about sort in decsendery order couse we like : 1 1 2 2 2 2 3 5 
+
+///
+****
+Small to large technique O(log n)
+600E-codeforces
+****
+
+////
+
+bitset<maxn> = > reduce the bitwise operation by factor of 32 !!!!
+you can use it in DP problem!
+
+////
+
+
 

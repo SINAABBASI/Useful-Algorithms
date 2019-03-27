@@ -1,52 +1,50 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define inf 1000000000000000000
 
-
+#define mod 1000000007
+#define inf 1000000000000000
+#define ll long long
+#define MAX  300011 
+#define endl '\n'
+#define fr first	
+#define sc second
 
 
 /////////////************dikstra with priority_queue with display path****************////////////////////
+//////////////worked with multiple edge
 
-
-
-vector<pair<int,int > > adj[1000101];
-vector<int> ans;
-
-void dik(int a,int n){
-	priority_queue<pair<int,int > ,vector<pair<int,int > > ,greater<pair<int,int > > >pq;
-	vector<long long int > dist(n+1,inf);
-	pq.push(make_pair(0,a));
-	dist[a]=0;
-	int parrent[n+1];
-	for(int i=0;i<=n;i++)parrent[i]=i;
-
-	while(!pq.empty()){
-		int v=pq.top().second;
+int n,m,k;
+int id[MAX],par[MAX];
+ll dis[MAX];
+struct ver
+{
+	int v,id,w;	
+}temp;
+vector<ver> g[MAX];
+bool see[MAX];
+inline void dik(){
+	priority_queue<pair<ll,int> > pq;
+	pq.push({0,1});
+	for(int i = 1; i <= n ; i++)dis[i] = inf;
+	dis[1] = 0;
+	int u,v,w;
+	while(pq.size()){
+		u = pq.top().sc;
 		pq.pop();
-		
-		for(int i=0;i<adj[v].size();i++){
-			int u=adj[v][i].first;
-			int l=adj[v][i].second;
-			if(dist[u] > dist[v] + l ){
-				dist[u] = dist[v]+ l;
-				parrent[u]=v;
-				pq.push(make_pair(dist[u],u));
+		// if(see[u])continue; JUST USING FOR CREATE A DIKESTRA TREEE
+		// see[u] = 1;
+		for(auto i : g[u]){
+			v = i.v;w  = i.w;
+			if(dis[v] > dis[u] + w){
+				par[v] = u;
+				dis[v] = dis[u] + w;
+				id[v] = i.id;
+				
+				pq.push({-dis[v],v});
 			}
 		}
 	}
-	if(dist[n]==inf)cout<<-1;
-	else{
-		int i=n;
-		while(1){
-			ans.push_back(i);
-			i=parrent[i];
-			if(i==1)break;
-		}
-		ans.push_back(1);
-	}
-	
 }
-
 
 ///////////////////////////////*O( E log(V) )*//////////////////
 

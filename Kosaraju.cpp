@@ -1,23 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
-vector<int> adj[max];
+vector<int> g[MAX],_g[MAX];
 stack<int> st;
-bool see[max];
+bool see[MAX];
 
-void dfs(int v){
-	see[v] = 1;
-	for(int i =0 ;i <adj[v].size(); i++){
-		int u = adj[v][i];
-		if(!see[u])dfs(u);
+void dfs(int u){
+	see[u] = 1;
+	for(auto v: g[u]){
+		if(!see[v])dfs(v);
 	}
 	st.push(v);
 }
 
-void dfs_back(int v){
-	cout<<v+1<< " " ;
-	see[v] = 1;
-	for(int i =0 ;i<adj[v].size() ; i++)
-		if(!see[adj[v][i]])dfs_back(adj[v][i]);
+void dfs_back(int u){
+	cout<<u+1<< " " ;
+	see[u] = 1;
+	for(auto v : _g[u])
+		if(!see[v])dfs_back(v);
 }
 
 void find_comp(){

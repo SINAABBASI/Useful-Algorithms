@@ -1,81 +1,55 @@
 #include <bits/stdc++.h>
-
+#define MAX 1000011
+#define LOG 21
+#define mod 4432676798593
 using namespace std;
-#define endl '\n'
-#define MAX 100011
-#define LOGN 21
-#define inf 2000000007
-#define mod 1000000000
-#define mp make_pair
 
+vector<int> g[MAX];
+int n;
 
-/*-------------LCA_FELEXIBLE----------------*/
-int deep[MAX],jump[MAX][LOGN],mi[MAX][LOGN];
-
-void dfs0(int u, int prev, int dep , int len){
-    deep[u] = dep;
-    jump[u][0] = prev;
-    mi[u][0] = len;
-    for(int i = 1 ; i < LOGN ;i++){
-        jump[u][i] = jump[ jump[u][i-1] ][i-1];
-        mi[u][i] = min( mi[u][i-1] ,  mi[jump[u][i-1]][i-1]);
-    }
-    for(auto it = g[u].begin();it != g[u].end() ; ++it){
-        int v = (*it).first ;
-        int w = (*it).second ;
-        if(deep[v] == -1){
-            dfs0(v , u ,dep + 1, w);
+int DP[LOG][MAX],level[MAX];
+void _dfs(int u){
+    for(auto v : g[u]){
+        if(DP[0][u] != v){
+            DP[0][v] = u;
+            level[v] = level[u] + 1;
+            _dfs(v);
         }
     }
 }
+void preprocess(){
+    ////One Base Graph
+    level[1] = 0;
+    DP[0][1] = 0;
+    _dfs(1);
+    for(int i = 1 ; i < LOG ; i++)
+        for(int j = 1; j <= n; j++)
+            DP[i][j] = DP[i-1][DP[i-1][j]];
+}
 
-int swam(int x , int y){
-    for(int i = LOGN - 1 ; i >= 0; i--){
-        
-        if((1<<i) <= y ){
-            y -= (1<<i);
-            x = jump[x][i];
+int lca(int a,int b){
+    ///b is greater
+    if(level[a] > level[b])swap(a,b);
+    int d = level[b] - level[a];
+    for(int i = 0; i < LOG ;i ++){
+        if(d & (1<<i))
+            b = DP[i][b];
+    }
+    if(a==b)return a;
+    for(int i= LOG - 1 ; i >=0 ; i--){
+        if(DP[i][a] != DP[i][b]){
+            a = DP[i][a];
+            b = DP[i][b];
         }
-
     }
-    return x;
+    return DP[0][a];
+}
+
+int dist(int a,int b){
+    return level[a] + level[b] - 2*level[lca(a,b)];
 }
 
 
-int lca(int x,int y){
-    if(deep[x] > deep[y]) x = swam(x , deep[x] - deep[y]);
-    if(deep[y] > deep[x]) y = swam(y , deep[y] - deep[x]);
-    if(x == y) return x;
-    for(int i = LOGN  - 1; i >= 0 ; i--){
 
-        if(jump[x][i] != jump[y][i]){
-            x = jump[x][i];
-            y = jump[y][i];
-        }
 
-    }
-    return jump[x][0];
-}
 
-int query(int x , int len){
-    int ans = inf;
-    for(int i =LOGN - 1; i >= 0; i--){
-        
-        if((1<<i) <= len){
-            len -= (1<<i);
-            ans = min(ans, mi[x][i]);
-            x = jump[x][i];
-        }
-
-    }
-    return ans;
-}
-
-void pre_lca(){
-    memset(deep,-1,sizeof deep);
-    for(int i = 1; i <= n ; i++){
-       if(deep[i] == -1) dfs0(i,0,0,0);
-    }
-}
-
-/*------------------------------------------*/

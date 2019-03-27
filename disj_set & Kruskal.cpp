@@ -4,7 +4,7 @@ using namespace std;
 #define MAX 100010
 
 int pat[MAX],height[MAX];
-vector< pair<int,pair<int,int>  > e[MAX];
+vector< pair<int,pair<int,int>  > > e[MAX];
 
 int getroot(int a){
     if(pat[a]==a)return a;
@@ -24,8 +24,8 @@ void update(int a,int b){
 }
 
 
-bool cmp (pair<int,pair<int,int> x, pair<int,pair<int,int> y){
-    return
+bool cmp (pair<int,pair<int,int>  > x, pair<int,pair<int,int> > y){
+    return x.first < y.first;
 }
 
 void find_mst(){

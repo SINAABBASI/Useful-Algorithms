@@ -4,33 +4,27 @@ using namespace std;
 int BITree[];
 
 
-//////////////////////////////// sum 0 to  i & max 0 to i
-int getsum(int index){
+//////////////////////////////// sum 0 to i & max 0 to i
+int getsum(int i){
 	int ans=0;
 	//ans = inf;
-	index++;
-	while(index>0){
-		
-		ans+=BITree[index];
+	i++;
+	while(i>0){
+		ans+=BITree[i];
 		// ans = max(ans,BITree[i]);
-
-		index -= index & (-index);
+		i -= i & (-i);
 	}
 	return ans;
 }
 
-void update(int index,int val){
-	index++;
-	while(index <= MAX){
+void update(int i,int val){
+	i++;
+	while(i <= MAX){
 
-		BITree[index]+=val;
-		//BITree[index] = max(BITree[MAX],val);
+		BITree[i]+=val;
+		//BITree[i] = max(BITree[MAX],val);
 
-		index += index & (-index);
+		i += i & (-i);
 	}
 }
-
 ////////////////////////////////
-int mian(){
-	memset(BITree,0,sizeof BITree);
-}
